@@ -24,7 +24,15 @@ const App: React.FC = () => {
                 setRates(res.data.rates)
                 setExchangeRate((res.data.rates[currencyTwo] * amount))
             })
-    }, [currencyOne, currencyTwo, amount])
+    }, [amount, currencyOne, currencyTwo])
+
+    const updateCurrencyOne = (currency:string) => {
+        setCurrencyOne(currency)
+    }
+
+    const updateCurrencyTwo = (currency:string) => {
+        setCurrencyTwo(currency)
+    }
 
 
     return (
@@ -33,7 +41,7 @@ const App: React.FC = () => {
                 <h1 className="text-2xl font-bold text-center">Exchange Rate Calculator</h1>
                 <p className="text-center">Choose the currency and the amounts to get the exchange rate</p>
 
-                <ExchangeRateForm currencies={currencies} currencyOne={currencyOne} currencyTwo={currencyTwo}/>
+                <ExchangeRateForm updateCurrencyTwo={updateCurrencyTwo} updateCurrencyOne={updateCurrencyOne} currencies={currencies} currencyOne={currencyOne} currencyTwo={currencyTwo}/>
             </div>
         </div>
 
