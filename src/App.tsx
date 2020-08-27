@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import ExchangeRateForm from "./ExchangeRateForm";
 
 
 const App: React.FC = () => {
@@ -32,6 +33,7 @@ const App: React.FC = () => {
                 <h1 className="text-2xl font-bold text-center">Exchange Rate Calculator</h1>
                 <p className="text-center">Choose the currency and the amounts to get the exchange rate</p>
 
+                <ExchangeRateForm currencies={currencies} currencyOne={currencyOne} currencyTwo={currencyTwo}/>
             </div>
         </div>
 
