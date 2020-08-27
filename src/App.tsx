@@ -14,6 +14,7 @@ const App: React.FC = () => {
     )
     const [rates, setRates] = useState<number[]>([])
     const [exchangeRate, setExchangeRate] = useState<number>(0)
+    const [basicRate, setBasicRate]  = useState<number>(0)
     const [currencyOne, setCurrencyOne] = useState<string>("DKK")
     const [currencyTwo, setCurrencyTwo] = useState<string>("USD")
     const [amount, setAmount] = useState<number>(1)
@@ -22,16 +23,28 @@ const App: React.FC = () => {
         axios.get(`https://api.exchangerate-api.com/v4/latest/${currencyOne}`)
             .then(res => {
                 setRates(res.data.rates)
+                setBasicRate((res.data.rates[currencyTwo]))
                 setExchangeRate((res.data.rates[currencyTwo] * amount))
             })
     }, [amount, currencyOne, currencyTwo])
 
-    const updateCurrencyOne = (currency:string) => {
+
+    const updateCurrencyOne = (currency: string) => {
         setCurrencyOne(currency)
     }
 
-    const updateCurrencyTwo = (currency:string) => {
+    const updateCurrencyTwo = (currency: string) => {
         setCurrencyTwo(currency)
+    }
+
+    const updateAmount = (amount:number) => {
+        setAmount(amount);
+    }
+
+    const swapCurrencies = () => {
+        const tmp = currencyOne;
+        setCurrencyOne(currencyTwo)
+        setCurrencyTwo(tmp)
     }
 
 
@@ -41,7 +54,18 @@ const App: React.FC = () => {
                 <h1 className="text-2xl font-bold text-center">Exchange Rate Calculator</h1>
                 <p className="text-center">Choose the currency and the amounts to get the exchange rate</p>
 
-                <ExchangeRateForm updateCurrencyTwo={updateCurrencyTwo} updateCurrencyOne={updateCurrencyOne} currencies={currencies} currencyOne={currencyOne} currencyTwo={currencyTwo}/>
+                <ExchangeRateForm updateCurrencyOne={updateCurrencyOne}
+                                  updateCurrencyTwo={updateCurrencyTwo}
+                                  currencies={currencies}
+                                  currencyOne={currencyOne}
+                                  currencyTwo={currencyTwo}
+                                  amount={amount}
+                                  exchangeRate={exchangeRate}
+                                  updateAmount={updateAmount}
+                                  basicRate={basicRate}
+                                  swapCurrencies={swapCurrencies}
+
+                />
             </div>
         </div>
 
